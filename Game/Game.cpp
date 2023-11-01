@@ -22,6 +22,7 @@ void Game::init() {
       renderer = SDL_CreateRenderer(window, -1, 0);
       if (renderer) {
         is_running = true;
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       }
     }
   }
@@ -47,4 +48,8 @@ void Game::clear() {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
+}
+
+void Game::update() {
+
 }

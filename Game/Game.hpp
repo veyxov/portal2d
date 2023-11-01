@@ -8,8 +8,10 @@ class Game {
         ~Game();
         void init();
         void handle_events();
+        void update();
         void render();
         void clear();
+        bool running() { return is_running; }
     private:
         bool is_running = false;
         SDL_Window *window = NULL;
