@@ -2,8 +2,11 @@
 #include <stdio.h>
 
 // Screen dimension constants
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 720;
+static class Settings {
+public:
+  const int SCREEN_WIDTH = 1024;
+  const int SCREEN_HEIGHT = 720;
+} Settings;
 
 int main(int argc, char *args[]) {
   SDL_Window *window = NULL;
@@ -14,15 +17,11 @@ int main(int argc, char *args[]) {
   if (SDL_Init(SDL_INIT_VIDEO) == 0) {
     // Create window
     window = SDL_CreateWindow("Main", SDL_WINDOWPOS_UNDEFINED,
-                              SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
-                              SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+                              SDL_WINDOWPOS_UNDEFINED, Settings.SCREEN_WIDTH,
+                              Settings.SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window != NULL) {
       // Get window surface
       screenSurface = SDL_GetWindowSurface(window);
-
-      // Fill the surface white
-      SDL_FillRect(screenSurface, NULL,
-                   SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
 
       // Update the surface
       SDL_UpdateWindowSurface(window);
