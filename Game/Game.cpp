@@ -1,9 +1,9 @@
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
-#include <SDL2/SDL_image.h>
 #include <iostream>
 
 // Screen dimension constants
@@ -16,7 +16,7 @@ public:
 Game::Game() {}
 Game::~Game() {}
 
-GameObject* player;
+GameObject *player;
 
 void Game::init() {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -24,7 +24,7 @@ void Game::init() {
                               SDL_WINDOWPOS_UNDEFINED, Settings.SCREEN_WIDTH,
                               Settings.SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window) {
-        IMG_Init(IMG_INIT_PNG);
+      IMG_Init(IMG_INIT_PNG);
       renderer = SDL_CreateRenderer(window, -1, 0);
       if (renderer) {
         is_running = true;
@@ -47,7 +47,9 @@ void Game::handle_events() {
 }
 
 void Game::render() {
+  SDL_RenderClear(renderer);
   player->render();
+  SDL_RenderPresent(renderer);
 }
 
 void Game::clear() {
