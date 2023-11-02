@@ -12,7 +12,7 @@ class Game {
         void render();
         void clear();
         bool running() { return is_running; }
-        SDL_Renderer *renderer = NULL;
+        static SDL_Renderer *renderer;
     private:
         bool is_running = false;
         SDL_Window *window = NULL;

@@ -18,6 +18,8 @@ Game::~Game() {}
 
 GameObject *player;
 
+SDL_Renderer *Game::renderer = nullptr;
+
 void Game::init() {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     window = SDL_CreateWindow("main", SDL_WINDOWPOS_UNDEFINED,
@@ -31,7 +33,7 @@ void Game::init() {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
       }
     }
-    player = new GameObject("player.png", renderer);
+    player = new GameObject("player.png");
   }
 }
 
