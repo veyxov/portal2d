@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 class Game {
@@ -13,6 +14,7 @@ class Game {
         void clear();
         bool running() { return is_running; }
         static SDL_Renderer *renderer;
+        static SDL_Event event;
     private:
         bool is_running = false;
         SDL_Window *window = NULL;

@@ -21,10 +21,6 @@ GameObject::GameObject(const char *textureSheet) {
 GameObject::~GameObject() {}
 
 void GameObject::update() {
-  static int utsk = 0;
-  xpos = 0 + utsk++;
-  ypos = 0 + utsk++;
-
   destRect.x = xpos;
   destRect.y = ypos;
 }

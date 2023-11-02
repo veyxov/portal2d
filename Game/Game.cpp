@@ -1,7 +1,9 @@
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
@@ -19,6 +21,7 @@ Game::~Game() {}
 GameObject *player;
 
 SDL_Renderer *Game::renderer = nullptr;
+SDL_Event Game::event;
 
 void Game::init() {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -38,19 +41,37 @@ void Game::init() {
 }
 
 void Game::handle_events() {
-  SDL_Event event;
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
     case SDL_QUIT:
       is_running = false;
       break;
+    case SDL_KEYDOWN:
+      if (event.key.keysym.sym == SDLK_ESCAPE) {
+        is_running = false;
+      }
+      // check for arrow right
+      if (event.key.keysym.sym == SDLK_RIGHT) {
+          player->xpos += 10;
+      }
+      // check for left
+        if (event.key.keysym.sym == SDLK_LEFT) {
+            player->xpos -= 10;
+        }
+        // check for up
+        if (event.key.keysym.sym == SDLK_UP) {
+            player->ypos -= 10;
+        }
+        // check for down
+        if (event.key.keysym.sym == SDLK_DOWN) {
+            player->ypos += 10;
+        }
+      break;
     }
   }
 }
 
-void Game::update() {
-  player->update();
-}
+void Game::update() { player->update(); }
 
 void Game::render() {
   SDL_RenderClear(renderer);
