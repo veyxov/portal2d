@@ -1,5 +1,7 @@
-#include <SDL2/SDL_timer.h>
 #include "Game/Game.hpp"
+#include "Game/GameObject.hpp"
+#include <SDL2/SDL_timer.h>
+#include <iostream>
 #include <stdio.h>
 
 Game *game = nullptr;

@@ -12,8 +12,8 @@ class Game {
         void render();
         void clear();
         bool running() { return is_running; }
+        SDL_Renderer *renderer = NULL;
     private:
         bool is_running = false;
         SDL_Window *window = NULL;
-        SDL_Renderer *renderer = NULL;
 };
