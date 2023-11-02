@@ -30,7 +30,7 @@ void Game::init() {
       renderer = SDL_CreateRenderer(window, -1, 0);
       if (renderer) {
         is_running = true;
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       }
     }
     player = new GameObject("player.png");
@@ -48,6 +48,10 @@ void Game::handle_events() {
   }
 }
 
+void Game::update() {
+  player->update();
+}
+
 void Game::render() {
   SDL_RenderClear(renderer);
   player->render();
@@ -59,5 +63,3 @@ void Game::clear() {
   SDL_DestroyRenderer(renderer);
   SDL_Quit();
 }
-
-void Game::update() {}
