@@ -10,7 +10,7 @@ COMPILER_FLAGS = -w
 LINKER_FLAGS = -lSDL2
 
 # OBJ_NAME specifies the name of our executable
-OBJ_NAME = main
+OBJ_NAME = main.out
 
 # This is the target that compiles our executable
 all:
