@@ -38,7 +38,7 @@ void Game::init() {
       }
     }
     player = new GameObject("assets/player.png");
-    box = new GameObject("assets/box.png");
+    box = new GameObject("assets/box.png", 100, 100);
   }
 }
 

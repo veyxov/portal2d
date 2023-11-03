@@ -5,16 +5,16 @@
 #include <SDL2/SDL_surface.h>
 #include <iostream>
 
-GameObject::GameObject(const char *textureSheet) {
+GameObject::GameObject(const char *textureSheet, int x, int y) {
   srcRect.h = 32;
   srcRect.w = 32;
   srcRect.x = 0;
   srcRect.y = 0;
 
-  destRect.h = 32;
-  destRect.w = 32;
-  destRect.x = 0;
-  destRect.y = 0;
+  destRect.h = xpos = 32;
+  destRect.w = ypos = 32;
+  destRect.x = x;
+  destRect.y = y;
   objTexture = IMG_LoadTexture(Game::renderer, textureSheet);
 }
 
