@@ -29,6 +29,28 @@ void GameObject::update(GameObject *box) {
     return;
   }
 
+  // check for collision
+  if (this->xpos + this->destRect.w > box->xpos &&
+      this->xpos<box->xpos + box->destRect.w &&this->ypos + this->destRect.h>
+          box->ypos &&
+      this->ypos < box->ypos + box->destRect.h) {
+
+    // if there is a collision we should move the box in the direction
+    // that the user is pussing towards
+    if (this->xpos + this->destRect.w > box->xpos &&
+        this->xpos < box->xpos + box->destRect.w) {
+      if (this->ypos > box->ypos) {
+        box->ypos -= 10;
+      } else if (this->ypos < box->ypos) {
+        box->ypos += 10;
+      } else if (this->xpos > box->xpos) {
+        box->xpos -= 10;
+      } else if (this->xpos < box->xpos) {
+        box->xpos += 10;
+      }
+    }
+  }
+
   // also check for out of bounds
   if (this->xpos < 0) {
     this->xpos = 0;
