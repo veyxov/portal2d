@@ -26,6 +26,5 @@ void GameObject::update() {
 }
 
 void GameObject::render() {
-  objTexture = IMG_LoadTexture(Game::renderer, "assets/player.png");
   SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }

@@ -19,6 +19,7 @@ Game::Game() {}
 Game::~Game() {}
 
 GameObject *player;
+GameObject *box;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -36,12 +37,13 @@ void Game::init() {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       }
     }
-    player = new GameObject("player.png");
+    player = new GameObject("assets/player.png");
+    box = new GameObject("assets/box.png");
   }
 }
 
 void Game::handle_events() {
-  const int velocity = 100;
+  const int velocity = 10;
 
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
@@ -73,11 +75,15 @@ void Game::handle_events() {
   }
 }
 
-void Game::update() { player->update(); }
+void Game::update() { 
+    player->update(); 
+    box->update();
+}
 
 void Game::render() {
   SDL_RenderClear(renderer);
   player->render();
+  box->render();
   SDL_RenderPresent(renderer);
 }
 
