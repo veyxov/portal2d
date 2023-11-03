@@ -41,6 +41,8 @@ void Game::init() {
 }
 
 void Game::handle_events() {
+  const int velocity = 100;
+
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
     case SDL_QUIT:
@@ -52,20 +54,20 @@ void Game::handle_events() {
       }
       // check for arrow right
       if (event.key.keysym.sym == SDLK_RIGHT) {
-          player->xpos += 10;
+        player->xpos += velocity;
       }
       // check for left
-        if (event.key.keysym.sym == SDLK_LEFT) {
-            player->xpos -= 10;
-        }
-        // check for up
-        if (event.key.keysym.sym == SDLK_UP) {
-            player->ypos -= 10;
-        }
-        // check for down
-        if (event.key.keysym.sym == SDLK_DOWN) {
-            player->ypos += 10;
-        }
+      if (event.key.keysym.sym == SDLK_LEFT) {
+        player->xpos -= velocity;
+      }
+      // check for up
+      if (event.key.keysym.sym == SDLK_UP) {
+        player->ypos -= velocity;
+      }
+      // check for down
+      if (event.key.keysym.sym == SDLK_DOWN) {
+        player->ypos += velocity;
+      }
       break;
     }
   }
