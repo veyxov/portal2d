@@ -37,7 +37,7 @@ void Game::init() {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       }
     }
-    player = new GameObject("assets/player.png");
+    player = new GameObject("assets/player.png", 0, 0);
     box = new GameObject("assets/box.png", 100, 100);
   }
 }
@@ -78,6 +78,31 @@ void Game::handle_events() {
 void Game::update() { 
     player->update(); 
     box->update();
+
+    // check for collision
+    if (player->xpos + player->destRect.w > box->xpos &&
+        player->xpos < box->xpos + box->destRect.w &&
+        player->ypos + player->destRect.h > box->ypos &&
+        player->ypos < box->ypos + box->destRect.h) {
+
+        // if there is a collision we should move the box in the direction
+        // that the user is pussing towards
+        if (player->xpos + player->destRect.w > box->xpos &&
+            player->xpos < box->xpos + box->destRect.w) {
+            if (player->ypos > box->ypos) {
+                box->ypos -= 10;
+            }
+            else if (player->ypos < box->ypos) {
+                box->ypos += 10;
+            }
+            else if (player->xpos > box->xpos) {
+                box->xpos -= 10;
+            }
+            else if (player->xpos < box->xpos) {
+                box->xpos += 10;
+            }
+        }
+    }
 }
 
 void Game::render() {
