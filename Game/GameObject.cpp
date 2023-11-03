@@ -25,11 +25,24 @@ void GameObject::update(GameObject *box) {
   destRect.x = xpos;
   destRect.y = ypos;
 
-  if (box == nullptr) {
-    return;
+  // also check for out of bounds
+  if (this->xpos < 0) {
+    this->xpos = 0;
+  }
+  if (this->xpos + this->destRect.w > Settings.SCREEN_WIDTH) {
+    this->xpos = Settings.SCREEN_WIDTH - this->destRect.w;
+  }
+  if (this->ypos < 0) {
+    this->ypos = 0;
+  }
+  if (this->ypos + this->destRect.h > Settings.SCREEN_HEIGHT) {
+    this->ypos = Settings.SCREEN_HEIGHT - this->destRect.h;
   }
 
   // check for collision
+  if (box == nullptr) {
+    return;
+  }
   if (this->xpos + this->destRect.w > box->xpos &&
       this->xpos<box->xpos + box->destRect.w &&this->ypos + this->destRect.h>
           box->ypos &&
@@ -49,20 +62,6 @@ void GameObject::update(GameObject *box) {
         box->xpos += 10;
       }
     }
-  }
-
-  // also check for out of bounds
-  if (this->xpos < 0) {
-    this->xpos = 0;
-  }
-  if (this->xpos + this->destRect.w > Settings.SCREEN_WIDTH) {
-    this->xpos = Settings.SCREEN_WIDTH - this->destRect.w;
-  }
-  if (this->ypos < 0) {
-    this->ypos = 0;
-  }
-  if (this->ypos + this->destRect.h > Settings.SCREEN_HEIGHT) {
-    this->ypos = Settings.SCREEN_HEIGHT - this->destRect.h;
   }
 }
 
