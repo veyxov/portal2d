@@ -4,7 +4,7 @@ class GameObject {
 public:
   GameObject(const char *textureSheet, int x = 0, int y = 0);
   ~GameObject();
-  void update();
+  void update(GameObject *box = nullptr);
   void render();
 
   int xpos = 0;

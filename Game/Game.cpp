@@ -1,19 +1,12 @@
 #include "Game.hpp"
 #include "GameObject.hpp"
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 #include <iostream>
-
-// Screen dimension constants
-static class Settings {
-public:
-  const int SCREEN_WIDTH = 1024;
-  const int SCREEN_HEIGHT = 720;
-} Settings;
+#include "Settings.cpp"
 
 Game::Game() {}
 Game::~Game() {}
@@ -75,51 +68,10 @@ void Game::handle_events() {
   }
 }
 
-void Game::update() { 
-    player->update(); 
+void Game::update() {
+    player->update(box);
     box->update();
 
-    // check for collision
-    if (player->xpos + player->destRect.w > box->xpos &&
-        player->xpos < box->xpos + box->destRect.w &&
-        player->ypos + player->destRect.h > box->ypos &&
-        player->ypos < box->ypos + box->destRect.h) {
-        // if there is a collision we should move the box in the direction
-        // that the user is pussing towards
-        if (player->xpos + player->destRect.w > box->xpos &&
-            player->xpos < box->xpos + box->destRect.w) {
-            // only push if the player is right in front
-            if (player->xpos == box->xpos || player->ypos == box->ypos)
-            {
-                if (player->ypos > box->ypos) {
-                    box->ypos -= 10;
-                }
-                else if (player->ypos < box->ypos) {
-                    box->ypos += 10;
-                }
-                else if (player->xpos > box->xpos) {
-                    box->xpos -= 10;
-                }
-                else if (player->xpos < box->xpos) {
-                    box->xpos += 10;
-                }
-            }
-        }
-    }
-
-    // also check for out of bounds
-    if (player->xpos < 0) {
-        player->xpos = 0;
-    }
-    if (player->xpos + player->destRect.w > Settings.SCREEN_WIDTH) {
-        player->xpos = Settings.SCREEN_WIDTH - player->destRect.w;
-    }
-    if (player->ypos < 0) {
-        player->ypos = 0;
-    }
-    if (player->ypos + player->destRect.h > Settings.SCREEN_HEIGHT) {
-        player->ypos = Settings.SCREEN_HEIGHT - player->destRect.h;
-    }
 }
 
 void Game::render() {
