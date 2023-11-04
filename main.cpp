@@ -24,6 +24,9 @@ int main() {
     frameTime = SDL_GetTicks64() - frameStart;
 
     // NOTE: this causes collission errors sometimes
+    if (frameDelay > frameTime) {
+      SDL_Delay(frameDelay - frameTime);
+    }
   }
   game->clear();
 }

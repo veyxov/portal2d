@@ -4,7 +4,7 @@ OBJS = main.cpp Game/*
 # CC specifies which compiler we're using
 CC = g++
 
-COMPILER_FLAGS = -Wextra -Wall -Wundef -Wshadow -fsanitize=undefined -O2
+COMPILER_FLAGS = --std=c++20 -Wextra -Wall -Wundef -Wshadow -fsanitize=undefined -O2
 
 # LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lSDL2 -lSDL2_image
