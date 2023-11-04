@@ -11,9 +11,6 @@
 Game::Game() {}
 Game::~Game() {}
 
-GameObject *player;
-GameObject *box;
-
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
 
@@ -26,57 +23,30 @@ void Game::init() {
       IMG_Init(IMG_INIT_PNG);
       renderer = SDL_CreateRenderer(window, -1, 0);
       if (renderer) {
-        is_running = true;
+        m_is_running = true;
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
       }
     }
-    player = new GameObject("assets/player.png", 0, 0);
-    box = new GameObject("assets/box.png", 100, 100);
   }
+}
+
+ecs::registry* Game::get_registry() {
+    return &m_registry;
 }
 
 void Game::handle_events() {
-  const int velocity = 10;
 
-  while (SDL_PollEvent(&event)) {
-    switch (event.type) {
-    case SDL_QUIT:
-      is_running = false;
-      break;
-    case SDL_KEYDOWN:
-      if (event.key.keysym.sym == SDLK_ESCAPE) {
-        is_running = false;
-      }
-      // check for arrow right
-      if (event.key.keysym.sym == SDLK_RIGHT) {
-        player->xpos += velocity;
-      }
-      // check for left
-      if (event.key.keysym.sym == SDLK_LEFT) {
-        player->xpos -= velocity;
-      }
-      // check for up
-      if (event.key.keysym.sym == SDLK_UP) {
-        player->ypos -= velocity;
-      }
-      // check for down
-      if (event.key.keysym.sym == SDLK_DOWN) {
-        player->ypos += velocity;
-      }
-      break;
-    }
-  }
 }
 
 void Game::update() {
-    player->update(box);
-    box->update();
+    m_transform_system.update(m_registry);
+    m_movement_system.update(m_registry);
+    m_sprite_system.update(m_registry);
 }
 
 void Game::render() {
   SDL_RenderClear(renderer);
-  player->render();
-  box->render();
+  m_sprite_system.render(m_registry, renderer);
   SDL_RenderPresent(renderer);
 }
 
