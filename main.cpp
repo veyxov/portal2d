@@ -1,46 +1,42 @@
-#include "Game/Game.hpp"
-#include "Game/GameObject.hpp"
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_timer.h>
-#include <iostream>
-#include <stdio.h>
+#include "game.hpp"
+#include "bird.hpp"
 
-Game *game = nullptr;
 
-void create_obj(const char* texture_path, int x, int y) {
-  ecs::entity cur_ent = ecs::create_entity();
-  game->get_registry()->sprites[cur_ent] =
-      ecs::sprite_component{SDL_Rect{0, 0, 202, 202}, SDL_Rect{x, y, 100, 100},
-                       IMG_LoadTexture(Game::renderer, texture_path)};
-  game->get_registry()->transforms[cur_ent] = ecs::transform_component{10, 20, 0, 0};
-  game->get_registry()->keys[cur_ent] = ecs::key_component{};
-}
+int main(int argc, char* argv[]) 
+{
+    cwt::game game(800, 600);
 
-int main() {
-  const int FPS = 60;
-  const int frameDelay = 1000 / FPS;
-  Uint32 frameStart;
-  int frameTime;
-  game = new Game();
-  game->init();
+    cwt::entity bird_1 = cwt::create_entity();
+    game.get_registry().sprites[bird_1] = cwt::sprite_component {
+        SDL_Rect{0, 0, 300, 230}, 
+        SDL_Rect{10, 10, 100, 73}, 
+        IMG_LoadTexture(game.get_renderer(), bird_path)
+    };
+    game.get_registry().transforms[bird_1] = cwt::transform_component { 10, 10, 0, 0};
+    game.get_registry().keys[bird_1] = cwt::keyinputs_component { };
+    
 
-  create_obj("assets/player.png", 111, 2);
-  create_obj("assets/box.png", 2, 2);
+    cwt::entity bird_2 = cwt::create_entity();
+    game.get_registry().sprites[bird_2] = cwt::sprite_component {
+        SDL_Rect{0, 0, 300, 230}, 
+        SDL_Rect{0, 0, 100, 73}, 
+        IMG_LoadTexture(game.get_renderer(), bird_path)
+    };
+    game.get_registry().transforms[bird_2] = cwt::transform_component { 10, 500, 0.01f, -0.01f};
 
-  while (game->running()) {
-    frameStart = SDL_GetTicks();
+    cwt::entity bird_3 = cwt::create_entity();
+    game.get_registry().sprites[bird_3] = cwt::sprite_component {
+        SDL_Rect{0, 0, 300, 230}, 
+        SDL_Rect{200, 300, 100, 73}, 
+        IMG_LoadTexture(game.get_renderer(), bird_path)
+    };
 
-    game->handle_events();
-    game->update();
-    game->render();
-
-    frameTime = SDL_GetTicks64() - frameStart;
-
-    // NOTE: this causes collission errors sometimes
-    if (frameDelay > frameTime) {
-      SDL_Delay(frameDelay - frameTime);
+    while(game.is_running()) 
+    {
+        game.read_input();
+        game.update();
+        game.render();
     }
-  }
-  game->clear();
+    
+    return 0;
 }
