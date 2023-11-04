@@ -71,7 +71,6 @@ void Game::handle_events() {
 void Game::update() {
     player->update(box);
     box->update();
-
 }
 
 void Game::render() {
