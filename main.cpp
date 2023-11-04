@@ -21,10 +21,9 @@ int main() {
     game->update();
     game->render();
 
-    frameTime = SDL_GetTicks() - frameStart;
-    if (frameDelay > frameTime) {
-      SDL_Delay(frameDelay - frameTime);
-    }
+    frameTime = SDL_GetTicks64() - frameStart;
+
+    // NOTE: this causes collission errors sometimes
   }
   game->clear();
 }
