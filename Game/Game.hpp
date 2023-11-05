@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SDL2/SDL_scancode.h>
 #include <algorithm>
 #include <any>
 #include <cassert>
@@ -82,23 +83,23 @@ struct movement_system {
     for (int e = 1; e <= max_entity; e++) {
       if (reg.transforms.contains(e) && reg.keys.contains(e)) {
 
-        if (keys[SDL_SCANCODE_A]) {
+        if (keys[SDL_SCANCODE_LEFT]) {
           reg.transforms[e].vel_x = -1.0f;
         }
-        if (keys[SDL_SCANCODE_S]) {
+        if (keys[SDL_SCANCODE_DOWN]) {
           reg.transforms[e].vel_y = 1.0f;
         }
-        if (keys[SDL_SCANCODE_W]) {
+        if (keys[SDL_SCANCODE_UP]) {
           reg.transforms[e].vel_y = -1.0f;
         }
-        if (keys[SDL_SCANCODE_D]) {
+        if (keys[SDL_SCANCODE_RIGHT]) {
           reg.transforms[e].vel_x = 1.0f;
         }
 
-        if (!keys[SDL_SCANCODE_A] && !keys[SDL_SCANCODE_D]) {
+        if (!keys[SDL_SCANCODE_LEFT] && !keys[SDL_SCANCODE_RIGHT]) {
           reg.transforms[e].vel_x = 0.0f;
         }
-        if (!keys[SDL_SCANCODE_S] && !keys[SDL_SCANCODE_W]) {
+        if (!keys[SDL_SCANCODE_DOWN] && !keys[SDL_SCANCODE_UP]) {
           reg.transforms[e].vel_y = 0.0f;
         }
       }
