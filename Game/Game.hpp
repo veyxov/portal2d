@@ -83,17 +83,18 @@ struct movement_system {
     for (int e = 1; e <= max_entity; e++) {
       if (reg.transforms.contains(e) && reg.keys.contains(e)) {
 
+          float speed = 0.1f;
         if (keys[SDL_SCANCODE_LEFT]) {
-          reg.transforms[e].vel_x = -1.0f;
+          reg.transforms[e].vel_x = -speed;
         }
         if (keys[SDL_SCANCODE_DOWN]) {
-          reg.transforms[e].vel_y = 1.0f;
+          reg.transforms[e].vel_y = speed;
         }
         if (keys[SDL_SCANCODE_UP]) {
-          reg.transforms[e].vel_y = -1.0f;
+          reg.transforms[e].vel_y = -speed;
         }
         if (keys[SDL_SCANCODE_RIGHT]) {
-          reg.transforms[e].vel_x = 1.0f;
+          reg.transforms[e].vel_x = speed;
         }
 
         if (!keys[SDL_SCANCODE_LEFT] && !keys[SDL_SCANCODE_RIGHT]) {
@@ -101,6 +102,32 @@ struct movement_system {
         }
         if (!keys[SDL_SCANCODE_DOWN] && !keys[SDL_SCANCODE_UP]) {
           reg.transforms[e].vel_y = 0.0f;
+        }
+      }
+    }
+
+    // handle object collisions, push away when colliding
+    for (int e = 1; e <= max_entity; e++) {
+      if (reg.transforms.contains(e)) {
+        for (int e2 = 1; e2 <= max_entity; e2++) {
+          if (reg.transforms.contains(e2) && e != e2) {
+            if (reg.transforms[e].pos_x < reg.transforms[e2].pos_x + 100 &&
+                reg.transforms[e].pos_x + 100 > reg.transforms[e2].pos_x &&
+                reg.transforms[e].pos_y < reg.transforms[e2].pos_y + 73 &&
+                reg.transforms[e].pos_y + 73 > reg.transforms[e2].pos_y) {
+              // collision
+              if (reg.transforms[e].pos_x < reg.transforms[e2].pos_x) {
+                reg.transforms[e].pos_x -= 1.0f;
+              } else {
+                reg.transforms[e].pos_x += 1.0f;
+              }
+              if (reg.transforms[e].pos_y < reg.transforms[e2].pos_y) {
+                reg.transforms[e].pos_y -= 1.0f;
+              } else {
+                reg.transforms[e].pos_y += 1.0f;
+              }
+            }
+          }
         }
       }
     }
