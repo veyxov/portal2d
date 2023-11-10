@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "GameObject.hpp"
 #include <SDL2/SDL_render.h>
 #include <fstream>
 #include <iostream>
@@ -11,8 +12,7 @@ enum class MapCell {
 
 class Map {
 public:
-  Map(std::string path, cwt::game &game) {
-    m_renderer = game.get_renderer();
+  Map(std::string path) {
 
     std::ifstream file(path);
 
@@ -33,8 +33,9 @@ public:
           break;
         case '#':
           cur = MapCell::Wall;
+          break;
         default:
-          std::cerr << "cannot parse: " << c << " for a map tile";
+          std::cerr << "cannot parse: " << c << " for a map tile\n";
           return;
         }
         row.push_back(cur);
@@ -42,35 +43,21 @@ public:
       m_map.push_back(row);
     }
   }
-  ~Map() {
-      std::cerr << "not implemented!";
-  }
-  void render() const {
-    const int cellSize = 20;
-
-    for (size_t i = 0; i < m_map.size(); ++i) {
-      for (size_t j = 0; j < m_map[i].size(); ++j) {
-        SDL_Rect rect = {static_cast<int>(j * cellSize),
-                         static_cast<int>(i * cellSize), cellSize, cellSize};
-
-        // Adjust rendering based on your needs
-        switch (m_map[i][j]) {
-        case MapCell::Empty:
-          SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255); // White
-          break;
-        case MapCell::Wall:
-          SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255); // Black
-          break;
-        }
-
-        SDL_RenderFillRect(m_renderer, &rect);
+  std::vector<cwt::entity> to_game_objects(cwt::game& game) {
+    std::vector<cwt::entity> entities;
+    for (int i = 0; i < m_map.size(); ++i) {
+      for (int j = 0; j < m_map[i].size(); ++j) {
+          if (m_map[i][j] == MapCell::Wall) {
+              GameObject cur(game, "assets/wall.png", i + 10, j + 10, false);
+          }
       }
     }
+  GameObject player(game, "assets/wall.png", 100, 100, true);
 
-    SDL_RenderPresent(m_renderer);
+    return entities;
   }
+  ~Map() { std::cerr << "not implemented!"; }
 
 private:
   std::vector<std::vector<MapCell>> m_map;
-  SDL_Renderer *m_renderer;
 };

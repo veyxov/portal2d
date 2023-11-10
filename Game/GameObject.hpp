@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_rect.h>
+#pragma once
 
 class GameObject {
 public:

@@ -7,8 +7,8 @@ int main(int argc, char *argv[]) {
 
   GameObject box(game, "assets/box.png", 10, 10);
   GameObject player(game, "assets/player.png", 100, 100, true);
-  Map map("assets/map.txt", game);
-  map.render();
+  Map map("assets/map.txt");
+  map.to_game_objects(game);
 
   while (game.is_running()) {
     game.read_input();
