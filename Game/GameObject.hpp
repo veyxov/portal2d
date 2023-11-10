@@ -1,7 +1,7 @@
 #include "Game.hpp"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_rect.h>
-#include <sys/types.h>
+
 class GameObject {
 public:
   GameObject(cwt::game &game, const char *texture_path, int x, int y, bool has_keys = false) {
