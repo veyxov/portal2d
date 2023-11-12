@@ -23,28 +23,32 @@ std::size_t create_entity() {
   return entities;
 }
 
-struct sprite_component {
+class sprite_component {
+public:
   SDL_Rect src;
   SDL_Rect dst;
   SDL_Texture *texture;
 };
 
-struct transform_component {
+class transform_component {
+public:
   float pos_x;
   float pos_y;
   float vel_x;
   float vel_y;
 };
 
-struct keyinputs_component {};
+class keyinputs_component {};
 
-struct registry {
+class registry {
+public:
   std::unordered_map<entity, sprite_component> sprites;
   std::unordered_map<entity, transform_component> transforms;
   std::unordered_map<entity, keyinputs_component> keys;
 };
 
-struct sprite_system {
+class sprite_system {
+public:
   void update(registry &reg) {
     for (int e = 1; e <= max_entity; e++) {
       if (reg.sprites.contains(e) && reg.transforms.contains(e)) {
@@ -63,7 +67,8 @@ struct sprite_system {
   }
 };
 
-struct transform_system {
+class transform_system {
+public:
   float dt = 0.1f;
 
   void update(registry &reg) {
@@ -76,14 +81,15 @@ struct transform_system {
   }
 };
 
-struct movement_system {
+class movement_system {
+public:
   void update(registry &reg) {
     const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
     for (int e = 1; e <= max_entity; e++) {
       if (reg.transforms.contains(e) && reg.keys.contains(e)) {
 
-          float speed = 0.1f;
+        float speed = 0.1f;
         if (keys[SDL_SCANCODE_LEFT]) {
           reg.transforms[e].vel_x = -speed;
         }
